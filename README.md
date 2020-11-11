@@ -2,6 +2,10 @@
 
 ---
 
+## Overview
+
+This is a simple web app which is useful to create a form and share it with others to collect the data, the collected data can be downloaded into excelsheet for future purpose.
+
 ## Installation Intsructions
 
 Activate virtual environment if you wish.
