@@ -1,0 +1,3 @@
+.main-container .container-fluid .row .table-responsive table thead tr th{
+    min-width: 200px;
+}

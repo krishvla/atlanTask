@@ -1,0 +1,47 @@
+.nav-container{
+    padding: 10px;
+}
+.nav-container .navbar{
+    padding: 0px;
+    background-color: #121212;
+    border-radius: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+}
+
+.nav-container .navbar ul li a{
+    color: white;
+}
+
+  
+  .toast{
+    border-radius: 5px !important;
+    margin-right: 20px;
+  }
+  .toast-body{
+    max-width: 350px;
+  }
+  #messages {
+    z-index: 9999 !important;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+  #toast_head{
+    text-align: center !important;
+  }
+  #edit_modal_title{
+    margin-left: 30%;
+  }
+  .toast .toast-header.alert_success{
+    background-color: seagreen;
+  }
+  .toast .toast-header.alert_info{
+    background-color: rgba(0, 119, 255, 0.877) !important;
+  }
+  .toast .toast-header.alert_error{
+    background-color: tomato;
+  }

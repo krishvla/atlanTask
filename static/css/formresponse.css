@@ -1,0 +1,21 @@
+body{
+    background-color: #121212;
+}
+
+.container .form-container{
+    padding: 10px 30px 30px 30px;
+    border-radius: 7px;
+    background-color: white;
+}
+.container{
+    margin-top: 5%;
+}
+
+.container .form-container h4{
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.container .form-container button{
+    margin-left: 40%;
+}

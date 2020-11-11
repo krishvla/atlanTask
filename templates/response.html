@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/response.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+{% endblock %}
+{% block content %}
+    <div class="main-container">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-10"><p>Form Title</p></div>
+                <div class="col-2"><i class="fa fa-download" aria-hidden="true" onclick="get_excel()">Download</i></div>
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="testTable table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="{% static 'js/jsontotable.js' %}"></script>
+<script>
+    let data = JSON.parse(('{{ responses|escapejs }}'));
+    let questions = JSON.parse('{{ form|escapejs }}');
+    let head = {};
+    head[0] = 'Mail';
+    let count = 1;
+    questions.forEach(question => {
+        head[count] = question;
+        count += 1;
+    });
+    var table = $('.testTable').htmlson({
+        data: data,
+        headers: head,
+    });
+
+    function get_excel(){
+        let excel_json = table.toJson();
+        console.log(excel_json);
+        JSONToCSVConvertor(excel_json['body'], '{{ title }}', excel_json['head'][0]);
+    }
+    function JSONToCSVConvertor(JSONData, ReportTitle, headings) {
+    var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
+    var CSV = '';       
+    CSV += ReportTitle + '\r\n\n';
+    var row = "";
+    for (var index in headings) {
+        row += headings[index] + ',';
+    }
+
+    row = row.slice(0, -1);
+    CSV += row + '\r\n';
+    for (var i = 0; i < arrData.length; i++) {
+        var row = "";
+        for (var index in arrData[i]) {
+            row += '"' + arrData[i][index] + '",';
+        }
+
+        row.slice(0, row.length - 1);
+        CSV += row + '\r\n';
+    }
+
+    if (CSV == '') {        
+        alert("Invalid data");
+        return;
+    }   
+    var fileName = "Form_Response_";
+    fileName += ReportTitle.replace(/ /g,"_");   
+    var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
+    var link = document.createElement("a");    
+    link.href = uri;
+    link.style = "visibility:hidden";
+    link.download = fileName + ".csv";  
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/createform.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+{% endblock %}
+{% block content %}
+<div class="main-container">
+    <div class="row">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Available Fields</h5>
+                  <div class="list-group">
+                    <button type="button" id="short_answer" onclick="append_form(this)" class="list-group-item list-group-item-action">Short Answer<span class="badge badge-primary badge-pill"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
+                    <button type="button" id="long_answer" onclick="append_form(this)" class="list-group-item list-group-item-action">Long Answer<span class="badge badge-primary badge-pill"><i class="fa fa-angle-right" aria-hidden="true"></i></span></button>
+                    <button type="button" id="multiple_choice" onclick="append_form(this)" class="list-group-item list-group-item-action">Multiple Choice<span class="badge badge-primary badge-pill"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+                    <button type="button" id="Check_box" onclick="append_form(this)" class="list-group-item list-group-item-action">Check Boxes<span class="badge badge-primary badge-pill"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+                    <button type="button" id="range" onclick="append_form(this)" class="list-group-item list-group-item-action">Number Range<span class="badge badge-primary badge-pill"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="col-9">
+            <div class="card">
+                <form method="POST">
+                    <div class="card-body form_generated">
+                        <h5 class="card-title">Generated Form</h5>
+                        <div class="container">
+                                {% csrf_token %}
+                                <input type="text" name="json_data" id="json_data" hidden>
+                                <div class="form-group form-inline">
+                                    <label for="title">Title &nbsp;&nbsp;&nbsp;</label>
+                                    <input type="text" class="form-control" name="title" placeholder="Enter Form Title" required>
+                                </div>
+                                <div id="dynamic_form_container"></div>
+                        </div>
+                        <br>
+                    </div>
+                    <button type="submit" href="#" class="btn btn-primary sub-button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i>&nbsp; Generate Form</a> 
+                </form>
+              </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="inputmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Configure Field</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="modal_body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" onclick="remove_active()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" onclick="append_card()"  class="btn btn-primary">Add Field</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="{% static 'js/createform.js' %}"></script>
+{% endblock %}

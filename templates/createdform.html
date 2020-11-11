@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/createdform.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+{% endblock %}
+{% block content %}
+<div class="main-container">
+    <div class="row">
+        {% if forms %}
+            {% for form in forms %}
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ form.title }}</h5>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="{{ form.form_id }}" value="http://localhost:8000/form/{{ form.form_id }}" aria-describedby="inline_{{ form.form_id }}" readonly>
+                                <div class="input-group-append">
+                                    <div class="input-group-text" id="inline_{{ form.form_id }}">
+                                        <i class="fa fa-clipboard copy-btn" aria-hidden="true" data-clipboard-text="http://localhost:8000/form/{{ form.form_id }}"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="form/{{ form.form_id }}" target="_blank" class="btn btn-primary"><i class="fa fa-paper-plane-o" aria-hidden="true"></i>&nbsp; Submit Response</a>
+                            <a href="response/{{ form.form_id }}" target="_blank" class="btn btn-primary"><i class="fa fa-users" aria-hidden="true"></i>&nbsp; View Responses</a>
+                        </div>
+                    </div>
+                </div>  
+            {% endfor %}
+        {% else %}
+                <div class="container">
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                          <h1 class="display-4">No Forms Created</h1>
+                          <p class="lead"><a href="create-form">Click Here</a> to Create Forms</p>
+                        </div>
+                      </div>
+                </div>
+        {% endif %}
+    </div>
+</div>
+<script>
+var clipboard = new ClipboardJS('.copy-btn');
+clipboard.on('success', function(e) {
+    alert('SuccessFully Copied')
+});
+</script>
+{% endblock %}
